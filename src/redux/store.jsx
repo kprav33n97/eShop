@@ -5,5 +5,5 @@ export const store = configureStore({
     reducer: {
         cart: cartSlice
     },
-    devTools: true
+    devTools : true
 })
