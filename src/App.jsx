@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
+  Navigate,
 } from "react-router-dom";
 import Home from './pages/home/Home';
 import Order from './pages/order/Order';
@@ -24,7 +25,11 @@ const App = () => {
       <Router>
       <Routes>
         <Route path='/' element={<Home/>}/>
-        <Route path='/order' element={<Order/>}/>
+        <Route path="/order" element={
+            <ProtectedRoutes>
+              <Order />
+            </ProtectedRoutes>
+          } />
         <Route path='/cart' element={<Cart/>}/>
         <Route path='/dashboard' element={<Dashboard/>}/>
         <Route path='/login' element={<Login/>}/>
@@ -34,10 +39,35 @@ const App = () => {
         <Route path='/updateproduct' element={<UpdateProduct/>}/>
         <Route path='/*' element={<NoPage/>}/>
       </Routes>
-    </Router>s
+      <ToastContainer/>
+    </Router>
     </MyState>
     
   )
 }
 
 export default App
+
+
+const ProtectedRoutes = ({Children}) => {
+  const user = localStorage.getItem('user');
+  if(user) {
+    return Children;
+  } else {
+   return <Navigate to={'/login'}/>
+  }
+}
+
+
+// Admin 
+
+export const ProtectedRoutesForAdmin = ({children}) => {
+  const admin = JSON.parse(localStorage.getItem('user'))
+  console.log(admin.user.email)
+  if (admin.user.email === 'kpraveenkumar2006@gmail.com') {
+    return children
+  }
+  else {
+    return <Navigate to='/login' />
+  }
+}
