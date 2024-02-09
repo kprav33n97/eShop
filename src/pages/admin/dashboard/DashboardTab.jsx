@@ -7,7 +7,8 @@ import { AiFillShopping, AiFillPlusCircle, AiFillDelete } from 'react-icons/ai';
 
 function DashboardTab() {
     const context = useContext(myContext)
-    const { mode } = context
+    const { mode, product } = context
+    console.log(product);
     let [isOpen, setIsOpen] = useState(false)
 
     function closeModal() {
