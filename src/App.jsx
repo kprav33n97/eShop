@@ -31,12 +31,16 @@ const App = () => {
             </ProtectedRoutes>
           } />
         <Route path='/cart' element={<Cart/>}/>
-        <Route path='/dashboard' element={<Dashboard/>}/>
+        <Route path="/dashboard" element={
+            <ProtectedRoutesForAdmin><Dashboard /></ProtectedRoutesForAdmin>
+          } />
         <Route path='/login' element={<Login/>}/>
         <Route path='/signup' element={<Signup/>}/>
         <Route path='/productinfo/:id' element={<ProductInfo/>}/>
-        <Route path='/addproduct' element={<AddProduct/>}/>
-        <Route path='/updateproduct' element={<UpdateProduct/>}/>
+        <Route path="/addproduct" element={
+            <ProtectedRoutesForAdmin><AddProduct /></ProtectedRoutesForAdmin>} />
+        <Route path="/updateproduct" element={
+            <ProtectedRoutesForAdmin><UpdateProduct /></ProtectedRoutesForAdmin>} />
         <Route path='/*' element={<NoPage/>}/>
       </Routes>
       <ToastContainer/>
@@ -49,10 +53,10 @@ const App = () => {
 export default App
 
 
-const ProtectedRoutes = ({Children}) => {
+export const ProtectedRoutes = ({children}) => {
   const user = localStorage.getItem('user');
   if(user) {
-    return Children;
+    return children;
   } else {
    return <Navigate to={'/login'}/>
   }
