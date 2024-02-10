@@ -38,7 +38,7 @@ function MyState(props) {
 
   })
 
-  // Add Product Section  
+  // ********************** Add Product Section  **********************
   const addProduct = async () => {
     if (products.title == null || products.price == null || products.imageUrl == null || products.category == null || products.description == null) {
       return toast.error('Please fill all fields')
@@ -48,10 +48,6 @@ function MyState(props) {
     try {
       await addDoc(productRef, products)
       toast.success("Product Add successfully")
-      
-      setTimeout(() => {
-        window.location.href = '/dashboard'
-      }, 800);
       getProductData()
       closeModal()
       setLoading(false)
@@ -64,7 +60,7 @@ function MyState(props) {
 
   const [product, setProduct] = useState([]);
 
-  // Get product
+  // ****** get product
   const getProductData = async () => {
     setLoading(true)
     try {
